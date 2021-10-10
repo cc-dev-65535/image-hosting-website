@@ -1,0 +1,18 @@
+extends layout
+block script
+  script(src='/javascripts/mainscript.js' defer)
+block content
+  //h1= title
+  //p Welcome to #{title}
+  h1 images here
+  div(id='imagedisplay')
+    each image in images
+      a(href=`/image/${image.uri}`): img(src=`/uploads/${image.uri}`)
+  h2 upload image
+  form(id="fileinput" action="/upload" method="post" enctype="multipart/form-data")
+    label tags here
+    input(id="taginput")
+    br
+    input(type='file' name='image' id='filebutton')
+    br
+    button(id='filesend') Send
