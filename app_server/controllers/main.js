@@ -35,7 +35,21 @@ const getImage = async (req, res) => {
   console.log(imageData);
   const uri = imageData[0].uri;
   console.log(uri);
-  res.render('image', {path: uri});
+
+  const pathtwo = '/api/comments/'
+  const urltwo = apiOptions.server + pathtwo + req.params.imagepath;
+  const responsetwo = await fetch(urltwo);
+  //TODO: rest api response error handling
+  console.log(responsetwo);
+  if (response.status === 404) {
+    return next(err);
+  }
+  const commentData = await responsetwo.json();
+  console.log(commentData);
+  const commentArray = commentData[0].comments;
+  console.log(commentArray);
+
+  res.render('image', {path: uri, comments: commentArray});
 };
 
 const upload = async (req, res) => {

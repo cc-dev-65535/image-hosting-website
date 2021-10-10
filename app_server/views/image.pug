@@ -6,3 +6,14 @@ block content
   //p Welcome to #{title}
   h1 image
   img(src=`/uploads/${path}`)
+  h1 comments here
+  div(id='commentdisplay')
+    each comment in comments
+      label #{comment.author}
+      p #{comment.text}
+  form(id="input" action=`/api/images/${path}` method="post")
+    input(id="taginput")
+    br
+    textarea(id="inputBox")
+    br
+    button(id='send') Send
