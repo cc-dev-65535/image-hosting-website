@@ -7,7 +7,7 @@ const getImageComments = (req, res) => {
     if (err) {
       return res.status(400).json(err);
     }
-    console.log(image);
+    //console.log(image);
     /*
     if (!image[0].comments.length) {
       return res.status(404).json({message: "no comments"});
@@ -25,17 +25,22 @@ const postComment = (req, res) => {
     if (!image) {
       return res.status(404).json({message: "image missing"});
     }
-    addComment(req, res. image);
+    addComment(req, res, image);
   });
 };
 
-const addComment = (req, res, image) => {
-  image.comments.push({
+const addComment = async (req, res, image) => {
+  //console.log(image);
+  const comment = {
     author: req.body.author,
     text: req.body.text
-  });
-
-  image.save((err, image) => {
+  }
+  //console.log(comment);
+  image[0].comments.push(comment);
+  //console.log(image);
+  //await image[0].save();
+  //res.status(201).json(comment);
+  image[0].save((err, image) => {
     if (err) {
       res.status(400).json(err);
     } else {

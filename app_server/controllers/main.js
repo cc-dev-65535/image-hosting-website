@@ -1,7 +1,7 @@
-//const {readdirSync} = require("fs");
+const createError = require('http-errors');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const apiOptions = {
-  server: 'http://localhost:3000'
+  server: 'http://localhost:3200'
 };
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = '';
@@ -12,12 +12,15 @@ const homepage = async (req, res) => {
   const url = apiOptions.server + path;
   const response = await fetch(url);
   //TODO: rest api response error handling
-  console.log(response);
+  //console.log(response);
   if (response.status === 404) {
     return res.render('index', { title: 'Simple Image Hosting Site', images: []});
   }
+  if (response.status !== 200) {
+    return next(createError(response.status));
+  }
   const imageData = await response.json();
-  console.log(imageData);
+  //console.log(imageData);
   imageData.reverse();
   res.render('index', { title: 'Simple Image Hosting Site', images: imageData});
 };
@@ -27,27 +30,26 @@ const getImage = async (req, res) => {
   const url = apiOptions.server + path + req.params.imagepath;
   const response = await fetch(url);
   //TODO: rest api response error handling
-  console.log(response);
-  if (response.status === 404) {
-    return next(err);
+  //console.log(response);
+  if (response.status !== 200) {
+    return next(createError(response.status));
   }
   const imageData = await response.json();
-  console.log(imageData);
   const uri = imageData[0].uri;
-  console.log(uri);
+  //console.log(uri);
 
   const pathtwo = '/api/comments/'
   const urltwo = apiOptions.server + pathtwo + req.params.imagepath;
   const responsetwo = await fetch(urltwo);
   //TODO: rest api response error handling
-  console.log(responsetwo);
-  if (response.status === 404) {
-    return next(err);
+  //console.log(responsetwo);
+  if (responsetwo.status !== 200) {
+    return next(createError(response.status));
   }
   const commentData = await responsetwo.json();
-  console.log(commentData);
+  //console.log(commentData);
   const commentArray = commentData[0].comments;
-  console.log(commentArray);
+  //console.log(commentArray);
 
   res.render('image', {path: uri, comments: commentArray});
 };
@@ -64,22 +66,44 @@ const upload = async (req, res) => {
 	  body: JSON.stringify(body),
     headers: {'Content-Type': 'application/json'}
   });
+  if (response.status !== 201) {
+    return next(createError(response.status));
+  }
   const imageData = await response.json();
-  console.log(imageData);
+  //console.log(imageData);
   //TODO: rest api response error handling
 
   res.redirect('/');
-  /*
-  let filename = './uploads/' + req.file.filename;
-  appendfile("./public/uploads/1.jpg", filename, function(err) {
-    if (err) throw err;
+};
+
+const postComment = async (req, res) => {
+  //console.log(Object.keys(req.file));
+  const path = '/api/comments/'
+  const url = apiOptions.server + path + req.params.imagepath;
+  const body = {
+    author: req.body.author,
+    text: req.body.text
+  };
+  console.log(body);
+  const response = await fetch(url, {
+    method: 'post',
+	  body: JSON.stringify(body),
+    headers: {'Content-Type': 'application/json'}
   });
-  */
+  if (response.status !== 201) {
+    return next(createError(response.status));
+  }
+  const commentData = await response.json();
+  //console.log(commentData);
+  //TODO: rest api response error handling
+
+  res.redirect(`/image/${req.params.imagepath}`);
 };
 
 
 module.exports = {
   homepage,
   getImage,
-  upload
+  upload,
+  postComment
 };

@@ -11,9 +11,9 @@ block content
     each comment in comments
       label #{comment.author}
       p #{comment.text}
-  form(id="input" action=`/api/images/${path}` method="post")
-    input(id="taginput")
+  form(id="input" action=`/comment/${path}` method="post")
+    input(id="taginput" name="author")
     br
-    textarea(id="inputBox")
+    textarea(id="inputBox" name="text")
     br
     button(id='send') Send

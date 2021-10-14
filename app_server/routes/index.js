@@ -24,5 +24,6 @@ const upload = multer({ storage: storage })
 router.get('/', ctrl.homepage);
 router.get('/image/:imagepath', ctrl.getImage);
 router.post('/upload', upload.single('image'), ctrl.upload);
+router.post('/comment/:imagepath', ctrl.postComment);
 
 module.exports = router;
