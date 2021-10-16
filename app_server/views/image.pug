@@ -4,16 +4,16 @@ block script
 block content
   //h1= title
   //p Welcome to #{title}
-  h1 image
-  img(src=`/uploads/${path}`)
-  h1 comments here
-  div(id='commentdisplay')
+  a(href=`/uploads/${path}` id='imageDisplayRef'): img(src=`/uploads/${path}`)
+  h1 Comments
+  div(id='commentDisplay')
     each comment in comments
-      label #{comment.author}
-      p #{comment.text}
-  form(id="input" action=`/comment/${path}` method="post")
-    input(id="taginput" name="author")
-    br
+      div(id= "commentContainer")
+        div(id= "commentLabel") #{comment.author}
+        div(id= "commentText") #{comment.text}
+  h1 Post Comment
+  form(id="commentInput" action=`/comment/${path}` method="post")
+    label Poster:
+    input(id="authorInput" name="author")
     textarea(id="inputBox" name="text")
-    br
-    button(id='send') Send
+    button(id='sendButton') Send

@@ -4,11 +4,12 @@ block script
 block content
   //h1= title
   //p Welcome to #{title}
-  h1 upload image
-  form(id="fileinput" action="/upload" method="post" enctype="multipart/form-data")
-    input(type='file' name='image' id='filebutton')
-    button Upload!
-  h2 images here
-  div(id='imageDisplay')
-    each image in images
-      div(class='imgContainer'): a(href=`/image/${image.uri}`): img(src=`/uploads/${image.uri}`)
+  div(id="root")
+    div(id="uploadContainer")
+      h1 Image Upload
+      form(id="fileinput" action="/upload" method="post" enctype="multipart/form-data")
+        input(type='file' name='image' id='filebutton')
+        button(id="uploadButton") Upload!
+    div(id='imageDisplay')
+      each image in images
+        div(class='imgContainer'): a(href=`/image/${image.uri}`): img(src=`/uploads/${image.uri}`)

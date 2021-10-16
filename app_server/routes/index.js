@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     const tempArray = file.originalname.split(".");
     const fileType = tempArray[tempArray.length - 1];
     //TODO verify that this is an accepted file type using regexp
-
+    //TODO handle case where no file is selected
     cb(null, timestamp + "." + fileType);
   }
 })
