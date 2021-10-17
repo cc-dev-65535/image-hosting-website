@@ -59,3 +59,9 @@ typings/
 
 # next.js build output
 .next
+
+# exclude upload folder files
+public/uploads/*
+
+# but leave readme inside
+!public/uploads/README.txt
