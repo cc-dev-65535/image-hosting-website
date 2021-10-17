@@ -17,6 +17,7 @@ h1 {
   font-size: 2.5em;
   font-weight: bold;
   margin-left: 0.4em;
+  margin-bottom: 0.5em;
 }
 
 button {
@@ -32,9 +33,56 @@ button:hover {
   background-color: #333;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  display: inline-block;
+  text-align: left;
+}
+
+label[for="filebutton"] {
+  border: 3px solid #ccc;
+  background-color: #999;
+  border-radius: 0.5em;
+  padding: 1em;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5em;
+}
+
+label[for="filebutton"]:hover {
+  background-color: #333;
+}
+
+input[type="file"] {
+  height: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+#fileList {
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+}
+
+#fileList p {
+  color: red;
+  padding-top: 1.5em;
+}
+
+
+#uploadButton {
+  margin-top: 0.5em;
+}
+
 #uploadContainer {
   float: left;
-  margin-right: 15px;
+  margin-left: 0.8em;
 }
 
 #imageDisplay {
@@ -59,22 +107,9 @@ button:hover {
 }
 
 .imgContainer img {
-  width: 100%;
+  max-width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-input[type="file"] {
-  border: 3px solid #ccc;
-  background-color: #999;
-  border-radius: 0.5em;
-  padding: 1em;
-  font-weight: bold;
-  color: #fff;
-}
-
-input[type="file"]:hover {
-  background-color: #333;
 }
 
 #uploadButton {
@@ -85,13 +120,7 @@ input[type="file"]:hover {
   margin: 1em;
 }
 
-#commentInput {
-  margin: 1em;
-}
-
 #imageDisplayRef img {
-  width: 50%;
-  height: 50%;
   margin: 1em;
 }
 
@@ -103,10 +132,19 @@ input[type="file"]:hover {
 #commentLabel {
   background-color: rgba(192, 128, 63, 0.3);
   margin-bottom: 0.1em;
+  padding: 0.5em;
+  width: 40em;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
 }
 
 #commentText {
   background-color: rgba(192, 128, 63, 0.1);
+  padding: 0.5em;
+  width: 40em;
+  height: 10em;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
 }
 
 #commentInput {
@@ -124,8 +162,4 @@ input[type="file"]:hover {
   margin-bottom: 0.2em;
   display: block;
   resize:none;
-}
-
-#sendButton {
-
 }

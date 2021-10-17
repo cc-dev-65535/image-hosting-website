@@ -1,25 +1,24 @@
-/*
-getImages();
+const fileButton = document.querySelector('#filebutton');
+const fileList = document.querySelector('#fileList');
 
-async function getImages() {
-  const path = "/uploads/";
-  const response = await fetch("http://localhost:3000/api/images");
-  const data = await response.json();
-  //TODO: rest api response error handling
+fileButton.addEventListener('change', updateFile);
 
-  data.reverse();
-  data.forEach(item => {
-    const srcPath = path + item.uri;
-    displayImage(srcPath, item.uri);
-  });
+function updateFile() {
+  let curFiles = fileButton.files;
+  //console.log(curFiles.length);
+
+  while (fileList.firstChild) {
+    fileList.removeChild(fileList.firstChild);
+  }
+  //console.log(curFiles);
+
+  if(!(curFiles.length === 0))  {
+    const fileImage = document.createElement('img');
+    fileImage.src = "/images/icons8-image-file-64.png";
+    fileList.appendChild(fileImage);
+
+    const fileText = document.createElement('p');
+    fileText.textContent = curFiles[0].name;
+    fileList.appendChild(fileText);
+  }
 }
-
-function displayImage(imageSrc, filename) {
-  const linkNode = document.createElement('a');
-  const imgNode = document.createElement('img');
-  imgNode.src = imageSrc;
-  linkNode.href = "/image/" + filename;
-  linkNode.appendChild(imgNode);
-  document.querySelector('#imagedisplay').appendChild(linkNode);
-}
-*/

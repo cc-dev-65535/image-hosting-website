@@ -7,9 +7,11 @@ block content
   div(id="root")
     div(id="uploadContainer")
       h1 Image Upload
-      form(id="fileinput" action="/upload" method="post" enctype="multipart/form-data")
-        input(type='file' name='image' id='filebutton')
+      form(id="fileInput" action="/upload" method="post" enctype="multipart/form-data")
+        label(for="filebutton") Choose Image
+        input(type='file' name='image' id='filebutton' accept="image/*")
+        div(id="fileList")
         button(id="uploadButton") Upload!
     div(id='imageDisplay')
       each image in images
-        div(class='imgContainer'): a(href=`/image/${image.uri}`): img(src=`/uploads/${image.uri}`)
+        div(class='imgContainer'): a(href=`/image/${image._id}`): img(src=`/uploads/${image.uri}`)

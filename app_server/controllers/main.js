@@ -5,14 +5,20 @@ const apiOptions = {
 };
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = '';
+  //TODO add production server url here
 }
 
-const homepage = async (req, res) => {
+const homepage = async (req, res, next) => {
   const path = '/api/images'
   const url = apiOptions.server + path;
-  const response = await fetch(url);
-  //TODO: rest api response error handling
-  //console.log(response);
+  let response;
+  try {
+    response = await fetch(url);
+  } catch(error) {
+    console.log(error);
+    return next(createError(500));
+  }
+  // CASE: No images to display
   if (response.status === 404) {
     return res.render('index', { title: 'Simple Image Hosting Site', images: []});
   }
@@ -20,84 +26,97 @@ const homepage = async (req, res) => {
     return next(createError(response.status));
   }
   const imageData = await response.json();
-  //console.log(imageData);
   imageData.reverse();
   res.render('index', { title: 'Simple Image Hosting Site', images: imageData});
 };
 
-const getImage = async (req, res) => {
+const getImage = async (req, res, next) => {
   const path = '/api/images/'
-  const url = apiOptions.server + path + req.params.imagepath;
-  const response = await fetch(url);
-  //TODO: rest api response error handling
-  //console.log(response);
+  const url = apiOptions.server + path + req.params.imageid;
+  let response;
+  try {
+    response = await fetch(url);
+  } catch(error) {
+    console.log(error);
+    return next(createError(500));
+  }
   if (response.status !== 200) {
     return next(createError(response.status));
   }
   const imageData = await response.json();
   const uri = imageData[0].uri;
-  //console.log(uri);
+  const imageID = imageData[0]._id;
 
   const pathtwo = '/api/comments/'
-  const urltwo = apiOptions.server + pathtwo + req.params.imagepath;
-  const responsetwo = await fetch(urltwo);
-  //TODO: rest api response error handling
-  //console.log(responsetwo);
+  const urltwo = apiOptions.server + pathtwo + req.params.imageid;
+  let responsetwo;
+  try {
+    responsetwo = await fetch(url);
+  } catch(error) {
+    console.log(error);
+    return next(createError(500));
+  }
   if (responsetwo.status !== 200) {
     return next(createError(response.status));
   }
   const commentData = await responsetwo.json();
-  //console.log(commentData);
   const commentArray = commentData[0].comments;
-  //console.log(commentArray);
 
-  res.render('image', {path: uri, comments: commentArray});
+  res.render('image', {path: uri, comments: commentArray, imageid: imageID});
 };
 
-const upload = async (req, res) => {
-  //console.log(Object.keys(req.file));
+const upload = async (req, res, next) => {
+  if (req.file == null) {
+    return next(createError(400));
+  }
   const path = '/api/images'
   const url = apiOptions.server + path;
   const body = {
     uri: req.file.filename
   };
-  const response = await fetch(url, {
-    method: 'post',
-	  body: JSON.stringify(body),
-    headers: {'Content-Type': 'application/json'}
-  });
+  let response;
+  try {
+    response = await fetch(url, {
+      method: 'post',
+	     body: JSON.stringify(body),
+       headers: {'Content-Type': 'application/json'}
+    });
+  } catch (error) {
+     console.log(error);
+     return next(createError(500));
+  }
   if (response.status !== 201) {
     return next(createError(response.status));
   }
-  const imageData = await response.json();
-  //console.log(imageData);
-  //TODO: rest api response error handling
 
   res.redirect('/');
 };
 
-const postComment = async (req, res) => {
-  //console.log(Object.keys(req.file));
+const postComment = async (req, res, next) => {
+  if ((req.body.author == "") || (req.body.text == "")) {
+    return next(createError(400));
+  }
   const path = '/api/comments/'
-  const url = apiOptions.server + path + req.params.imagepath;
+  const url = apiOptions.server + path + req.params.imageid;
   const body = {
     author: req.body.author,
     text: req.body.text
   };
-  console.log(body);
-  const response = await fetch(url, {
-    method: 'post',
-	  body: JSON.stringify(body),
-    headers: {'Content-Type': 'application/json'}
-  });
+  try {
+    response = await fetch(url, {
+      method: 'post',
+	     body: JSON.stringify(body),
+       headers: {'Content-Type': 'application/json'}
+    });
+  } catch (error) {
+     console.log(error);
+     return next(createError(500));
+  }
   if (response.status !== 201) {
     return next(createError(response.status));
   }
-  const commentData = await response.json();
-  //console.log(commentData);
-  //TODO: rest api response error handling
 
-  res.redirect(`/image/${req.params.imagepath}`);
+  res.redirect(`/image/${req.params.imageid}`);
 };
 
 

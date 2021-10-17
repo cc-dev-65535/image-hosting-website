@@ -12,8 +12,12 @@ block content
         div(id= "commentLabel") #{comment.author}
         div(id= "commentText") #{comment.text}
   h1 Post Comment
-  form(id="commentInput" action=`/comment/${path}` method="post")
-    label Poster:
-    input(id="authorInput" name="author")
-    textarea(id="inputBox" name="text")
-    button(id='sendButton') Send
+  form(id="commentInput" action=`/comment/${imageid}` method="post")
+    ul
+      li
+        label(for="authorInput") Name:
+        input(id="authorInput" name="author")
+      li
+        label(for="inputBox") Comment:
+        textarea(id="inputBox" name="text")
+      button(id='sendButton') Send

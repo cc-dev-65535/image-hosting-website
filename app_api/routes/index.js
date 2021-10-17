@@ -5,12 +5,12 @@ const ctrlComments = require('../controllers/comments');
 
 // Images
 router.get('/images', ctrlImages.getAllImages);
-router.get('/images/:imagepath', ctrlImages.getOneImage);
+router.get('/images/:imageid', ctrlImages.getOneImage);
 router.post('/images', ctrlImages.uploadImage)
-router.delete('/images/:imagepath', ctrlImages.deleteImage);
+router.delete('/images/:imageid', ctrlImages.deleteImage);
 
 // Comments
-router.get('/comments/:imagepath', ctrlComments.getImageComments);
-router.post('/comments/:imagepath', ctrlComments.postComment);
+router.get('/comments/:imageid', ctrlComments.getImageComments);
+router.post('/comments/:imageid', ctrlComments.postComment);
 
 module.exports = router;

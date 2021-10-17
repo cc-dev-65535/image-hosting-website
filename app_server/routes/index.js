@@ -9,12 +9,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const timestamp = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    console.log(file);
-    //console.log({a: 'b', c: 'd'});
     const tempArray = file.originalname.split(".");
     const fileType = tempArray[tempArray.length - 1];
-    //TODO verify that this is an accepted file type using regexp
-    //TODO handle case where no file is selected
     cb(null, timestamp + "." + fileType);
   }
 })
@@ -22,8 +18,8 @@ const upload = multer({ storage: storage })
 
 /* GET home page. */
 router.get('/', ctrl.homepage);
-router.get('/image/:imagepath', ctrl.getImage);
+router.get('/image/:imageid', ctrl.getImage);
 router.post('/upload', upload.single('image'), ctrl.upload);
-router.post('/comment/:imagepath', ctrl.postComment);
+router.post('/comment/:imageid', ctrl.postComment);
 
 module.exports = router;

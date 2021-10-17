@@ -14,7 +14,7 @@ const getAllImages = (req, res) => {
 };
 
 const getOneImage = (req, res) => {
-  imgModel.find({uri: req.params.imagepath}).exec((err, image) => {
+  imgModel.find({_id: req.params.imageid}).exec((err, image) => {
     if (err) {
       return res.status(400).json(err);
     }
@@ -26,10 +26,8 @@ const getOneImage = (req, res) => {
 };
 
 const uploadImage = (req, res) => {
-  console.log(req.body.uri);
   imgModel.create(
     { uri: req.body.uri,
-      //timestamp: new Date(),
       comments: []
     }, (err, image) => {
       if (err) {
@@ -41,7 +39,7 @@ const uploadImage = (req, res) => {
 };
 
 const deleteImage = (req, res) => {
-  imgModel.find({uri: req.params.imagepath}).exec((err, image) => {
+  imgModel.find({_id: req.params.imageid}).exec((err, image) => {
     if (err) {
       return res.status(400).json(err);
     }
@@ -49,6 +47,9 @@ const deleteImage = (req, res) => {
       return res.status(404).json({message: "image missing"});
     }
     image.remove((err, image) => {
+      if (err) {
+        return res.status(400).json(err);
+      }
       res.status(204).json(null);
     });
   });
