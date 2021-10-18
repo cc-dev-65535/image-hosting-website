@@ -1,8 +1,20 @@
 const mongoose = require('mongoose');
 const readLine = require ('readline');
 
-const dbURI = 'mongodb://localhost/ImageSite';
-mongoose.connect(dbURI, {useNewUrlParser: true});
+//const dbURI = 'mongodb://localhost/ImageSite';
+//TODO : hide password!
+const dbURI = process.env.NODE_ENV;
+//mongoose.connect(dbURI, {useNewUrlParser: true});
+try {
+  mongoose.connect(
+    dbURI,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => console.log("connected!")
+  );
+} catch (error) {
+  console.log("could not connect!");
+  process.exit();
+}
 
 mongoose.connection.on('connected', () => {
   console.log('Mongoose connected!');

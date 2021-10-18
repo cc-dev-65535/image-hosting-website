@@ -107,16 +107,15 @@ input[type="file"] {
 
 #imageDisplay {
   margin: 5em;
-  /*
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 200px 200px;
-  grid-gap: 20px;
-  */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+
+  /*
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
+  */
 }
 
 .imgContainer {
