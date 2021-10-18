@@ -3,7 +3,7 @@ const readLine = require ('readline');
 
 //const dbURI = 'mongodb://localhost/ImageSite';
 //TODO : hide password!
-const dbURI = process.env.NODE_ENV;
+const dbURI = process.env.MONGODB_URI;
 //mongoose.connect(dbURI, {useNewUrlParser: true});
 try {
   mongoose.connect(
