@@ -4,7 +4,7 @@ const apiOptions = {
   server: 'http://localhost:3200'
 };
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = '';
+  apiOptions.server = 'https://fathomless-wave-52759.herokuapp.com';
   //TODO add production server url here
 }
 
