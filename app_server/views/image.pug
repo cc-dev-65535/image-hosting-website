@@ -4,13 +4,13 @@ block script
 block content
   //h1= title
   //p Welcome to #{title}
-  a(href="" id='imageDisplayRef'): img(src=`/uploads/${path}`)
+  img(id="singleImage" src=`/uploads/${path}`)
   h1 Comments
   div(id='commentDisplay')
     each comment in comments
       div(id= "commentContainer")
-        div(id= "commentLabel") #{comment.author}
-        div(id= "commentText") #{comment.text}
+        div(id="commentLabel") #{comment.author}
+        div(id="commentText") #{comment.text}
   h1 Post Comment
   form(id="commentInput" action=`/comment/${imageid}` method="post")
     ul
