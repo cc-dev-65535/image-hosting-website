@@ -151,7 +151,7 @@ input[type="file"] {
   cursor: pointer;
 }
 
-.normal {
+#singleImage.normal {
   margin: 1em;
   margin-top: 5em;
   width: 100%;
