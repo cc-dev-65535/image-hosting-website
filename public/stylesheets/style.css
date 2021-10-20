@@ -143,8 +143,6 @@ input[type="file"] {
 #singleImage {
   margin: 1em;
   margin-top: 5em;
-  width: 50%;
-  height: 50%;
 }
 
 #singleImage:hover {
@@ -154,8 +152,6 @@ input[type="file"] {
 #singleImage.normal {
   margin: 1em;
   margin-top: 5em;
-  width: auto;
-  height: auto;
 }
 
 #commentContainer {
