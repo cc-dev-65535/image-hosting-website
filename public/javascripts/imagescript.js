@@ -6,8 +6,8 @@ image.height = scaledHeight;
 
 image.addEventListener("click", (event) => {
     if ((image.getAttribute('class') === null) || (image.getAttribute('class') === "")) {
-      image.removeAttribute(width);
-      image.removeAttribute(height);
+      image.removeAttribute("width");
+      image.removeAttribute("height");
       image.setAttribute("class", "normal");
     } else {
       image.width = scaledWidth;
