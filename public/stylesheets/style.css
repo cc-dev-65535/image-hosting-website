@@ -154,6 +154,8 @@ input[type="file"] {
 #singleImage.normal {
   margin: 1em;
   margin-top: 5em;
+  width: auto;
+  height: auto;
 }
 
 #commentContainer {
