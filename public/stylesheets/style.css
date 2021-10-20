@@ -76,6 +76,7 @@ label[for="filebutton"] {
 
 label[for="filebutton"]:hover {
   background-color: #333;
+  cursor: pointer;
 }
 
 input[type="file"] {
