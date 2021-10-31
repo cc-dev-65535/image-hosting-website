@@ -127,6 +127,8 @@ a.navbar-brand {
 
 .imgContainer {
   border: 3px solid lightblue;
+  width: 200px;
+  height: 200px;
   margin: 2em;
 }
 
