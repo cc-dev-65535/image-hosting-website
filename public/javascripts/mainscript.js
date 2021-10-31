@@ -33,7 +33,8 @@ for (let containerNode of Array.from(images)) {
   let scaledHeight = imageNode.naturalHeight * 0.30;
   console.log(scaledWidth);
   console.log(scaledHeight);
-  containerNode.width = scaledWidth;
-  containerNode.height = scaledHeight;
+  //containerNode.width = scaledWidth;
+  //containerNode.height = scaledHeight;
+  containerNode.setAttribute('style', `width: ${scaledWidth}; height: ${scaledHeight}`);
   console.log(containerNode);
 }
