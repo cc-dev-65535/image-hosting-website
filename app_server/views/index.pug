@@ -2,7 +2,7 @@ extends layout
 block script
   script(src='/javascripts/mainscript.js' defer)
 block content
-  div(id="root")
+  div(id="root" class="container")
     div(id="uploadContainer")
       h1 Image Upload
       form(id="fileInput" action="/upload" method="post" enctype="multipart/form-data")

@@ -87,7 +87,7 @@ input[type="file"] {
 }
 
 a.navbar-brand {
-  font-size: 18px;
+  font-size: 25px;
   font-family: 'Lobster', cursive;
 }
 
@@ -108,7 +108,6 @@ a.navbar-brand {
 }
 
 #uploadContainer {
-  float: left;
   margin-left: 0.8em;
 }
 
