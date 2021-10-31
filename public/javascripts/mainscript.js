@@ -22,6 +22,7 @@ function updateFile() {
 }
 
 const images = document.querySelectorAll(".imgContainer");
+console.log(images);
 
 for (let containerNode of images) {
   let imageNode = containerNode.children[0].children[0];
