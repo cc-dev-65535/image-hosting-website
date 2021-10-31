@@ -1,6 +1,6 @@
 let image = document.querySelector('#singleImage');
-scaledWidth = image.naturalWidth * 0.50;
-scaledHeight = image.naturalHeight * 0.50;
+let scaledWidth = image.naturalWidth * 0.50;
+let scaledHeight = image.naturalHeight * 0.50;
 image.width = scaledWidth;
 image.height = scaledHeight;
 

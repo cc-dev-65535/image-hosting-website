@@ -5,12 +5,10 @@ fileButton.addEventListener('change', updateFile);
 
 function updateFile() {
   let curFiles = fileButton.files;
-  //console.log(curFiles.length);
 
   while (fileList.firstChild) {
     fileList.removeChild(fileList.firstChild);
   }
-  //console.log(curFiles);
 
   if(!(curFiles.length === 0))  {
     const fileImage = document.createElement('img');
@@ -21,4 +19,14 @@ function updateFile() {
     fileText.textContent = curFiles[0].name;
     fileList.appendChild(fileText);
   }
+}
+
+const images = document.querySelectorAll(".imgContainer");
+
+for (let containerNode of images) {
+  let imageNode = containerNode.children[0].children[0];
+  let scaledWidth = imageNode.naturalWidth * 0.30;
+  let scaledHeight = imageNode.naturalHeight * 0.30;
+  containerNode.width = scaledWidth;
+  containerNode.height = scaledHeight;
 }

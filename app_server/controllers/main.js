@@ -20,14 +20,14 @@ const homepage = async (req, res, next) => {
   }
   // CASE: No images to display
   if (response.status === 404) {
-    return res.render('index', { title: 'Simple Image Hosting Site', images: []});
+    return res.render('index', { title: 'Image Hosting Site', images: []});
   }
   if (response.status !== 200) {
     return next(createError(response.status));
   }
   const imageData = await response.json();
   imageData.reverse();
-  res.render('index', { title: 'Simple Image Hosting Site', images: imageData});
+  res.render('index', { title: 'Image Hosting Site', images: imageData});
 };
 
 const getImage = async (req, res, next) => {
