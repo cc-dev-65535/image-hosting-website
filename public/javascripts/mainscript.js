@@ -30,6 +30,8 @@ for (let containerNode of Array.from(images)) {
   //console.log(imageNode);
   let scaledWidth = imageNode.naturalWidth * 0.30;
   let scaledHeight = imageNode.naturalHeight * 0.30;
+  console.log(scaledWidth);
+  console.log(scaledHeight);
   containerNode.width = scaledWidth;
   containerNode.height = scaledHeight;
   console.log(containerNode);
