@@ -25,7 +25,9 @@ const images = document.querySelectorAll(".imgContainer");
 //console.log(images);
 
 for (let containerNode of Array.from(images)) {
-  let imageNode = containerNode.children[0].children[0];
+  console.log(containerNode);
+  let imageNode = containerNode.childNodes[0].childNodes[0];
+  console.log(imageNode);
   let scaledWidth = imageNode.naturalWidth * 0.30;
   let scaledHeight = imageNode.naturalHeight * 0.30;
   containerNode.width = scaledWidth;
