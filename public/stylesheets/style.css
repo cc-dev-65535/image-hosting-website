@@ -108,8 +108,12 @@ a.navbar-brand {
 }
 
 #uploadContainer {
-  margin-top: 50px;
+  margin-top: 80px;
   margin-left: 0.8em;
+}
+
+#fileInput {
+  margin-left: 10px;
 }
 
 #imageDisplay {
