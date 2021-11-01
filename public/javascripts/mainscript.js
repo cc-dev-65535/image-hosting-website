@@ -28,6 +28,7 @@ for (let containerNode of Array.from(images)) {
   console.log(containerNode);
   let imageNode = containerNode.childNodes[0].childNodes[0];
   console.log(imageNode);
+  setTimeout(() => {console.log("timeout done")}, 2000);
   console.log(imageNode.naturalWidth);
   let scaledWidth = imageNode.naturalWidth * 0.30;
   let scaledHeight = imageNode.naturalHeight * 0.30;
