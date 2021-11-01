@@ -1,8 +1,13 @@
 let image = document.querySelector('#singleImage');
-let scaledWidth = image.naturalWidth * 0.50;
-let scaledHeight = image.naturalHeight * 0.50;
-image.width = scaledWidth;
-image.height = scaledHeight;
+let scaledWidth;
+let scaledHeight;
+
+imageNode.addEventListener("load", () => {
+  scaledWidth = image.naturalWidth * 0.50;
+  scaledHeight = image.naturalHeight * 0.50;
+  image.width = scaledWidth;
+  image.height = scaledHeight;
+});
 
 image.addEventListener("click", (event) => {
     if ((image.getAttribute('class') === null) || (image.getAttribute('class') === "")) {
