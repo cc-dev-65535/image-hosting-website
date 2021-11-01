@@ -2,7 +2,7 @@ let image = document.querySelector('#singleImage');
 let scaledWidth;
 let scaledHeight;
 
-imageNode.addEventListener("load", () => {
+image.addEventListener("load", () => {
   scaledWidth = image.naturalWidth * 0.50;
   scaledHeight = image.naturalHeight * 0.50;
   image.width = scaledWidth;
