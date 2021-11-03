@@ -120,13 +120,6 @@ a.navbar-brand {
   margin: 5em;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
-
-  /*
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-  */
 }
 
 .imgContainer {
@@ -202,4 +195,8 @@ a.navbar-brand {
   margin-bottom: 0.2em;
   display: block;
   resize:none;
+}
+
+.hidden {
+  display: none;
 }

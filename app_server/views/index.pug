@@ -12,4 +12,4 @@ block content
         button(id="uploadButton") Upload!
     div(id='imageDisplay')
       each image in images
-        div(class='imgContainer'): a(href=`/image/${image._id}`): img(src=`/uploads/${image.uri}`)
+        div(class='imgContainer hidden'): a(href=`/image/${image._id}`): img(src=`/uploads/${image.uri}`)
