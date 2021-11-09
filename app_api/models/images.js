@@ -7,9 +7,9 @@ const commentSchema = new mongoose.Schema({
 });
 
 const imageSchema = new mongoose.Schema({
-  uri: { type: String, required: true},
+  uri: { type: String, required: true },
+  thumburi: { type: String, required: true },
   timestamp: { type: Date, 'default': Date.now },
-  //tags: [String],
   comments: [commentSchema]
 });
 

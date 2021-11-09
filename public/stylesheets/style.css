@@ -19,7 +19,6 @@ button, input, select, textarea {
   border-color: #911821;
 }
 
-/* ||| REPLACING BOOTSTRAP DEFAULT MARGIN */
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
   margin-left: 1em;
 }
@@ -125,16 +124,12 @@ a.navbar-brand {
 }
 
 .imgContainer {
-  border: 3px solid lightblue;
-  width: 200px;
-  height: 200px;
   margin: 2em;
 }
 
 .imgContainer img {
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
+  max-width: 100%;
+  border: 3px solid lightblue;
 }
 
 #uploadButton {
@@ -143,6 +138,7 @@ a.navbar-brand {
 
 #commentDisplay {
   margin: 1em;
+  margin-top: 2em;
 }
 
 #singleImage {

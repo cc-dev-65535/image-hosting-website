@@ -1,11 +1,11 @@
 const createError = require('http-errors');
+const sharp = require('sharp');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const apiOptions = {
   server: 'http://localhost:3200'
 };
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = 'https://fathomless-wave-52759.herokuapp.com';
-  //TODO add production server url here
 }
 
 const homepage = async (req, res, next) => {
@@ -45,6 +45,7 @@ const getImage = async (req, res, next) => {
   }
   const imageData = await response.json();
   const uri = imageData[0].uri;
+  //const thumburi = imageData[0].thumburi;
   const imageID = imageData[0]._id;
 
   const pathtwo = '/api/comments/'
@@ -69,10 +70,31 @@ const upload = async (req, res, next) => {
   if (req.file == null) {
     return next(createError(400));
   }
+
+  let regex = /\\/g;
+  let filePath = req.file.path.replace(regex, "/")
+  //console.log(filePath);
+  let filenameArray = req.file.filename.split(".");
+  let newFileName = filenameArray[0] + "-thumb." + filenameArray[1];
+  //console.log(newFileName);
+  let image = sharp(filePath);
+  try {
+    await image.metadata().then(function(metadata) {
+      image
+          .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
+          .toFile(req.file.destination + "/" + newFileName)
+          .catch(err =>{ next(createError(500)) });
+    });
+  } catch(error) {
+    console.log(error);
+    return next(createError(500));
+  }
+
   const path = '/api/images'
   const url = apiOptions.server + path;
   const body = {
-    uri: req.file.filename
+    uri: req.file.filename,
+    thumburi: newFileName
   };
   let response;
   try {

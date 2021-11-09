@@ -20,19 +20,3 @@ function updateFile() {
     fileList.appendChild(fileText);
   }
 }
-
-function computeLayout() {
-  const images = document.querySelectorAll(".imgContainer");
-
-  for (let containerNode of Array.from(images)) {
-    let imageNode = containerNode.childNodes[0].childNodes[0];
-    imageNode.addEventListener("load", () => {
-      let scaledWidth = imageNode.naturalWidth * 0.30;
-      let scaledHeight = imageNode.naturalHeight * 0.30;
-      containerNode.setAttribute('style', `width: ${scaledWidth}px; height: ${scaledHeight}px`);
-      containerNode.setAttribute('class', "imgContainer");
-    });
-  }
-}
-
-computeLayout();

@@ -28,6 +28,7 @@ const getOneImage = (req, res) => {
 const uploadImage = (req, res) => {
   imgModel.create(
     { uri: req.body.uri,
+      thumburi: req.body.thumburi,
       comments: []
     }, (err, image) => {
       if (err) {
