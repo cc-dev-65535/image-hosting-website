@@ -2,7 +2,7 @@ extends layout
 block script
   script(src='/javascripts/imagescript.js' defer)
 block content
-  img(id="singleImage" src=`/uploads/${path}`)
+  img(id="singleImage" class="hidden" src=`/uploads/${path}`)
   h1 Comments
   div(id='commentDisplay')
     each comment in comments

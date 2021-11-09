@@ -7,7 +7,7 @@ image.addEventListener("load", () => {
   scaledHeight = image.naturalHeight * 0.50;
   image.width = scaledWidth;
   image.height = scaledHeight;
-  //image.setAttribute('class', "");
+  image.setAttribute('class', "");
 });
 
 image.addEventListener("click", (event) => {
