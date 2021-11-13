@@ -1,4 +1,6 @@
 const createError = require('http-errors');
+const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
+const fs = require("fs");
 const sharp = require('sharp');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const apiOptions = {
@@ -7,6 +9,10 @@ const apiOptions = {
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = 'https://fathomless-wave-52759.herokuapp.com';
 }
+const imageserver = 'https://imagehostingproject.s3.ca-central-1.amazonaws.com';
+
+const REGION = "ca-central-1";
+const s3Client = new S3Client({ region: REGION });
 
 const homepage = async (req, res, next) => {
   const path = '/api/images'
@@ -45,7 +51,7 @@ const getImage = async (req, res, next) => {
   }
   const imageData = await response.json();
   const uri = imageData[0].uri;
-  //const thumburi = imageData[0].thumburi;
+  const thumburi = imageData[0].thumburi;
   const imageID = imageData[0]._id;
 
   const pathtwo = '/api/comments/'
@@ -63,7 +69,55 @@ const getImage = async (req, res, next) => {
   const commentData = await responsetwo.json();
   const commentArray = commentData[0].comments;
 
-  res.render('image', {path: uri, comments: commentArray, imageid: imageID});
+  res.render('image', {thumbpath: thumburi, path: uri, comments: commentArray, imageid: imageID});
+};
+
+const createThumbImage = async (req, filePath, newFileName) => {
+  let image = sharp(filePath);
+  try {
+    await image.metadata().then(async (metadata) => {
+      await image
+            .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
+            .toFile(req.file.destination + "/" + newFileName)
+            .catch(err =>{ next(createError(500)) });
+    });
+  } catch(error) {
+    console.log(error);
+    return next(createError(500));
+  }
+};
+
+const uploadImageToStorage = async (req, filePath, newFileName, next) => {
+  //const thumbFilePath = req.file.destination + "/" + newFileName;
+  //console.log(req.file);
+  const slicedFilePath = filePath.substring(0, filePath.lastIndexOf('/'));
+  const thumbFilePath = slicedFilePath + "/" + newFileName;
+  //console.log(filePath);
+  //console.log(thumbFilePath);
+  let data = fs.readFileSync(filePath);
+  let thumbdata = fs.readFileSync(thumbFilePath);
+  console.log(data);
+  console.log(thumbdata);
+
+  const params = {
+    Bucket: "imagehostingproject", // The name of the bucket. For example, 'sample_bucket_101'.
+    Key: req.file.filename, // The name of the object. For example, 'sample_upload.txt'.
+    Body: data // The content of the object. For example, 'Hello world!".
+  };
+
+  const paramstwo = {
+    Bucket: "imagehostingproject", // The name of the bucket. For example, 'sample_bucket_101'.
+    Key: newFileName, // The name of the object. For example, 'sample_upload.txt'.
+    Body: thumbdata // The content of the object. For example, 'Hello world!".
+  };
+
+  try {
+    await s3Client.send(new PutObjectCommand(params));
+    await s3Client.send(new PutObjectCommand(paramstwo));
+  } catch (error) {
+    console.log(error);
+    return next(createError(500));
+  }
 };
 
 const upload = async (req, res, next) => {
@@ -71,30 +125,19 @@ const upload = async (req, res, next) => {
     return next(createError(400));
   }
 
-  let regex = /\\/g;
-  let filePath = req.file.path.replace(regex, "/")
-  //console.log(filePath);
-  let filenameArray = req.file.filename.split(".");
-  let newFileName = filenameArray[0] + "-thumb." + filenameArray[1];
-  //console.log(newFileName);
-  let image = sharp(filePath);
-  try {
-    await image.metadata().then(function(metadata) {
-      image
-          .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
-          .toFile(req.file.destination + "/" + newFileName)
-          .catch(err =>{ next(createError(500)) });
-    });
-  } catch(error) {
-    console.log(error);
-    return next(createError(500));
-  }
+  const regex = /\\/g;
+  const filePath = req.file.path.replace(regex, "/");
+  const filenameArray = req.file.filename.split(".");
+  const newFileName = filenameArray[0] + "-thumb." + filenameArray[1];
+
+  await createThumbImage(req, filePath, newFileName);
+  await uploadImageToStorage(req, filePath, newFileName, next);
 
   const path = '/api/images'
   const url = apiOptions.server + path;
   const body = {
-    uri: req.file.filename,
-    thumburi: newFileName
+    uri: imageserver + '/' + req.file.filename,
+    thumburi: imageserver + '/' + newFileName
   };
   let response;
   try {
