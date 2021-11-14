@@ -20,3 +20,15 @@ function updateFile() {
     fileList.appendChild(fileText);
   }
 }
+
+var displayImages = document.querySelectorAll(".images");
+
+displayImages.forEach(function(image) {
+    let tempImage = document.createElement('img');
+    tempImage.onload = (() => {
+      image.src = tempImage.src;
+      image.style.border = "3px solid lightblue";
+    });
+    tempImage.src = image.dataset.src;
+  }
+);

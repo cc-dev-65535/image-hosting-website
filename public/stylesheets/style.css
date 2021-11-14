@@ -129,7 +129,6 @@ a.navbar-brand {
 
 .imgContainer img {
   max-width: 100%;
-  border: 3px solid lightblue;
 }
 
 #uploadButton {
@@ -138,7 +137,6 @@ a.navbar-brand {
 
 #commentDisplay {
   margin: 1em;
-  margin-top: 2em;
 }
 
 #singleImage {
