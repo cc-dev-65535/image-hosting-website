@@ -88,16 +88,12 @@ const createThumbImage = async (req, filePath, newFileName) => {
 };
 
 const uploadImageToStorage = async (req, filePath, newFileName, next) => {
-  //const thumbFilePath = req.file.destination + "/" + newFileName;
-  //console.log(req.file);
   const slicedFilePath = filePath.substring(0, filePath.lastIndexOf('/'));
   const thumbFilePath = slicedFilePath + "/" + newFileName;
-  //console.log(filePath);
-  //console.log(thumbFilePath);
   let data = fs.readFileSync(filePath);
   let thumbdata = fs.readFileSync(thumbFilePath);
-  console.log(data);
-  console.log(thumbdata);
+  //console.log(data);
+  //console.log(thumbdata);
 
   const params = {
     Bucket: "imagehostingproject", // The name of the bucket. For example, 'sample_bucket_101'.

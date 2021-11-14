@@ -8,6 +8,7 @@ router.get('/images', ctrlImages.getAllImages);
 router.get('/images/:imageid', ctrlImages.getOneImage);
 router.post('/images', ctrlImages.uploadImage)
 router.delete('/images/:imageid', ctrlImages.deleteImage);
+router.put('/images/:imageid', ctrlImages.updateImage);
 
 // Comments
 router.get('/comments/:imageid', ctrlComments.getImageComments);

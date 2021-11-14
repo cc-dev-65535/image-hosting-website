@@ -40,6 +40,15 @@ const uploadImage = (req, res) => {
 };
 
 const deleteImage = (req, res) => {
+  imgModel.deleteOne({_id: req.params.imageid}).exec((err) => {
+    if (err) {
+      return res.status(400).json(err);
+    }
+    res.status(204).json(null);
+  });
+};
+
+const updateImage = (req, res) => {
   imgModel.find({_id: req.params.imageid}).exec((err, image) => {
     if (err) {
       return res.status(400).json(err);
@@ -47,11 +56,14 @@ const deleteImage = (req, res) => {
     if (!image) {
       return res.status(404).json({message: "image missing"});
     }
-    image.remove((err, image) => {
+    image[0].uri = req.body.uri;
+    image[0].thumburi = req.body.thumburi;
+
+    image[0].save((err, image) => {
       if (err) {
-        return res.status(400).json(err);
+        res.status(400).json(err);
       }
-      res.status(204).json(null);
+      res.status(201).json(null);
     });
   });
 };
@@ -60,5 +72,6 @@ module.exports = {
   getAllImages,
   getOneImage,
   uploadImage,
-  deleteImage
+  deleteImage,
+  updateImage
 };
