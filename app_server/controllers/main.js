@@ -74,46 +74,34 @@ const getImage = async (req, res, next) => {
 
 const createThumbImage = async (req, filePath, newFileName) => {
   let image = sharp(filePath);
-  try {
-    await image.metadata().then(async (metadata) => {
-      await image
+  await image.metadata().then(async (metadata) => {
+    await image
             .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
-            .toFile(req.file.destination + "/" + newFileName)
-            .catch(err =>{ next(createError(500)) });
-    });
-  } catch(error) {
-    console.log(error);
-    return next(createError(500));
-  }
+            .toFile(req.file.destination + "/" + newFileName);
+            //.catch(err =>{ next(createError(500)) });
+  });
 };
 
-const uploadImageToStorage = async (req, filePath, newFileName, next) => {
+const uploadImageToStorage = async (req, filePath, newFileName) => {
   const slicedFilePath = filePath.substring(0, filePath.lastIndexOf('/'));
   const thumbFilePath = slicedFilePath + "/" + newFileName;
   let data = fs.readFileSync(filePath);
   let thumbdata = fs.readFileSync(thumbFilePath);
-  //console.log(data);
-  //console.log(thumbdata);
 
   const params = {
-    Bucket: "imagehostingproject", // The name of the bucket. For example, 'sample_bucket_101'.
-    Key: req.file.filename, // The name of the object. For example, 'sample_upload.txt'.
-    Body: data // The content of the object. For example, 'Hello world!".
+    Bucket: "imagehostingproject",
+    Key: req.file.filename,
+    Body: data
   };
 
   const paramstwo = {
-    Bucket: "imagehostingproject", // The name of the bucket. For example, 'sample_bucket_101'.
-    Key: newFileName, // The name of the object. For example, 'sample_upload.txt'.
-    Body: thumbdata // The content of the object. For example, 'Hello world!".
+    Bucket: "imagehostingproject",
+    Key: newFileName,
+    Body: thumbdata
   };
 
-  try {
-    await s3Client.send(new PutObjectCommand(params));
-    await s3Client.send(new PutObjectCommand(paramstwo));
-  } catch (error) {
-    console.log(error);
-    return next(createError(500));
-  }
+  await s3Client.send(new PutObjectCommand(params));
+  await s3Client.send(new PutObjectCommand(paramstwo));
 };
 
 const upload = async (req, res, next) => {
@@ -126,8 +114,13 @@ const upload = async (req, res, next) => {
   const filenameArray = req.file.filename.split(".");
   const newFileName = filenameArray[0] + "-thumb." + filenameArray[1];
 
-  await createThumbImage(req, filePath, newFileName);
-  await uploadImageToStorage(req, filePath, newFileName, next);
+  try {
+    await createThumbImage(req, filePath, newFileName);
+    await uploadImageToStorage(req, filePath, newFileName, next);
+  } catch(error) {
+    console.log(error);
+    return next(createError(500));
+  }
 
   const path = '/api/images'
   const url = apiOptions.server + path;
