@@ -73,7 +73,7 @@ const getImage = async (req, res, next) => {
 };
 
 const createThumbImage = async (req, filePath, newFileName) => {
-  let image = sharp(filePath);
+  let image = await sharp(filePath);
   await image.metadata().then(async (metadata) => {
     await image
             .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
@@ -82,11 +82,27 @@ const createThumbImage = async (req, filePath, newFileName) => {
   });
 };
 
-const uploadImageToStorage = async (req, filePath, newFileName) => {
+const createPlaceHolder = async (req, filePath, placeHolderFileName) => {
+  let image = await sharp(filePath);
+  await image
+          .resize(1, 1)
+          .toBuffer().then(async (data) => {
+                let placeholder = await sharp(data);
+                await image.metadata().then(async (metadata) => {
+                    await placeholder
+                            .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
+                            .toFile(req.file.destination + "/" + placeHolderFileName);
+                });
+          });
+};
+
+const uploadImageToStorage = async (req, filePath, newFileName, placeHolderFileName) => {
   const slicedFilePath = filePath.substring(0, filePath.lastIndexOf('/'));
   const thumbFilePath = slicedFilePath + "/" + newFileName;
+  const placeHolderFilePath = slicedFilePath + "/" + placeHolderFileName;
   let data = fs.readFileSync(filePath);
-  let thumbdata = fs.readFileSync(thumbFilePath);
+  let thumbData = fs.readFileSync(thumbFilePath);
+  let placeHolderData = fs.readFileSync(placeHolderFilePath);
 
   const params = {
     Bucket: "imagehostingproject",
@@ -97,11 +113,18 @@ const uploadImageToStorage = async (req, filePath, newFileName) => {
   const paramstwo = {
     Bucket: "imagehostingproject",
     Key: newFileName,
-    Body: thumbdata
+    Body: thumbData
+  };
+
+  const paramsthree = {
+    Bucket: "imagehostingproject",
+    Key: placeHolderFileName,
+    Body: placeHolderData
   };
 
   await s3Client.send(new PutObjectCommand(params));
   await s3Client.send(new PutObjectCommand(paramstwo));
+  await s3Client.send(new PutObjectCommand(paramsthree));
 };
 
 const upload = async (req, res, next) => {
@@ -113,10 +136,12 @@ const upload = async (req, res, next) => {
   const filePath = req.file.path.replace(regex, "/");
   const filenameArray = req.file.filename.split(".");
   const newFileName = filenameArray[0] + "-thumb." + filenameArray[1];
+  const placeHolderFileName = filenameArray[0] + "-placeholder." + filenameArray[1];
 
   try {
     await createThumbImage(req, filePath, newFileName);
-    await uploadImageToStorage(req, filePath, newFileName, next);
+    await createPlaceHolder(req, filePath, placeHolderFileName);
+    await uploadImageToStorage(req, filePath, newFileName, placeHolderFileName);
   } catch(error) {
     console.log(error);
     return next(createError(500));
@@ -126,7 +151,8 @@ const upload = async (req, res, next) => {
   const url = apiOptions.server + path;
   const body = {
     uri: imageserver + '/' + req.file.filename,
-    thumburi: imageserver + '/' + newFileName
+    thumburi: imageserver + '/' + newFileName,
+    placeholderuri: imageserver + '/' + placeHolderFileName
   };
   let response;
   try {

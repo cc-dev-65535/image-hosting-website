@@ -29,6 +29,7 @@ const uploadImage = (req, res) => {
   imgModel.create(
     { uri: req.body.uri,
       thumburi: req.body.thumburi,
+      placeholderuri: req.body.placeholderuri,
       comments: []
     }, (err, image) => {
       if (err) {
@@ -58,6 +59,7 @@ const updateImage = (req, res) => {
     }
     image[0].uri = req.body.uri;
     image[0].thumburi = req.body.thumburi;
+    image[0].placeholderuri = req.body.placeholderuri;
 
     image[0].save((err, image) => {
       if (err) {

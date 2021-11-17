@@ -12,4 +12,4 @@ block content
         button(id="uploadButton") Upload!
     div(id='imageDisplay')
       each image in images
-        div(class='imgContainer'): a(href=`/image/${image._id}`): img(class="images" data-src=`${image.thumburi}`)
+        div(class='imgContainer'): a(href=`/image/${image._id}`): img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
