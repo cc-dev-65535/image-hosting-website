@@ -21,7 +21,7 @@ const homepage = async (req, res, next) => {
   try {
     response = await fetch(url);
   } catch(error) {
-    console.log(error);
+    //console.log(error);
     return next(createError(500));
   }
   // CASE: No images to display
@@ -43,7 +43,7 @@ const getImage = async (req, res, next) => {
   try {
     response = await fetch(url);
   } catch(error) {
-    console.log(error);
+    //console.log(error);
     return next(createError(500));
   }
   if (response.status !== 200) {
@@ -60,7 +60,7 @@ const getImage = async (req, res, next) => {
   try {
     responsetwo = await fetch(url);
   } catch(error) {
-    console.log(error);
+    //console.log(error);
     return next(createError(500));
   }
   if (responsetwo.status !== 200) {
@@ -74,26 +74,20 @@ const getImage = async (req, res, next) => {
 
 const createThumbImage = async (req, filePath, newFileName) => {
   let image = await sharp(filePath);
-  await image.metadata().then(async (metadata) => {
-    await image
-            .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
-            .toFile(req.file.destination + "/" + newFileName);
-            //.catch(err =>{ next(createError(500)) });
-  });
+  let metadataTemp;
+  await image.metadata().then((metadata) => {metadataTemp = metadata});
+  await image.resize(Math.round(metadataTemp.width * 0.3), Math.round(metadataTemp.height * 0.3))
+             .toFile(req.file.destination + "/" + newFileName);
 };
 
 const createPlaceHolder = async (req, filePath, placeHolderFileName) => {
   let image = await sharp(filePath);
-  await image
-          .resize(1, 1)
-          .toBuffer().then(async (data) => {
-                let placeholder = await sharp(data);
-                await image.metadata().then(async (metadata) => {
-                    await placeholder
-                            .resize(Math.round(metadata.width * 0.3), Math.round(metadata.height * 0.3))
-                            .toFile(req.file.destination + "/" + placeHolderFileName);
-                });
-          });
+  let placeHolder;
+  let metadataTemp;
+  await image.metadata().then((metadata) => {metadataTemp = metadata});
+  await image.resize(1, 1).toBuffer().then(async (data) => {placeHolder = await sharp(data)});
+  await placeHolder.resize(Math.round(metadataTemp.width * 0.3), Math.round(metadataTemp.height * 0.3))
+                   .toFile(req.file.destination + "/" + placeHolderFileName);
 };
 
 const uploadImageToStorage = async (req, filePath, newFileName, placeHolderFileName) => {
@@ -143,7 +137,7 @@ const upload = async (req, res, next) => {
     await createPlaceHolder(req, filePath, placeHolderFileName);
     await uploadImageToStorage(req, filePath, newFileName, placeHolderFileName);
   } catch(error) {
-    console.log(error);
+    //console.log(error);
     return next(createError(500));
   }
 
@@ -162,7 +156,7 @@ const upload = async (req, res, next) => {
        headers: {'Content-Type': 'application/json'}
     });
   } catch (error) {
-     console.log(error);
+     //console.log(error);
      return next(createError(500));
   }
   if (response.status !== 201) {
@@ -189,7 +183,7 @@ const postComment = async (req, res, next) => {
        headers: {'Content-Type': 'application/json'}
     });
   } catch (error) {
-     console.log(error);
+     //console.log(error);
      return next(createError(500));
   }
   if (response.status !== 201) {
