@@ -135,10 +135,6 @@ a.navbar-brand {
   display: block;
 }
 
-#commentDisplay {
-  margin: 1em;
-}
-
 #singleImage {
   margin: 1em;
   margin-top: 5em;
@@ -148,32 +144,27 @@ a.navbar-brand {
   cursor: pointer;
 }
 
-#singleImage.normal {
+#commentDisplay {
   margin: 1em;
-  margin-top: 5em;
+  overflow-wrap: break-word;
+  width: 75%;
 }
 
 #commentContainer {
   margin-top: 1em;
   margin-bottom: 1em;
+  background-color: rgba(192, 128, 63, 0.1);
 }
 
 #commentLabel {
   background-color: rgba(192, 128, 63, 0.3);
-  margin-bottom: 0.1em;
   padding: 0.5em;
-  width: 40em;
-  overflow-y: auto;
-  overflow-wrap: anywhere;
+  /*margin-bottom: 0.1em;*/
 }
 
 #commentText {
-  background-color: rgba(192, 128, 63, 0.1);
   padding: 0.5em;
-  width: 40em;
-  height: 10em;
-  overflow-y: auto;
-  overflow-wrap: anywhere;
+  /*padding: 0.5em;*/
 }
 
 #commentInput {
@@ -195,4 +186,8 @@ a.navbar-brand {
 
 .hidden {
   display: none;
+}
+
+.row {
+  --bs-gutter-x: 0;
 }

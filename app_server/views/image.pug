@@ -6,9 +6,9 @@ block content
   h1 Comments
   div(id='commentDisplay')
     each comment in comments
-      div(id= "commentContainer")
-        div(id="commentLabel") #{comment.author}
-        div(id="commentText") #{comment.text}
+      div(id="commentContainer" class="row")
+        span(id="commentLabel") #{comment.author}
+        p(id="commentText") #{comment.text}
   h1 Post Comment
   form(id="commentInput" action=`/comment/${imageid}` method="post")
     ul
