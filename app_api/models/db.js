@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const readLine = require ('readline');
 
-//const dbURI = 'mongodb://localhost/ImageSite';
-//mongoose.connect(dbURI, {useNewUrlParser: true});
+const dbURI = 'mongodb://localhost/ImageSite';
+mongoose.connect(dbURI, {useNewUrlParser: true});
 
+/*
 const dbURI = process.env.MONGODB_URI;
 try {
   mongoose.connect(
@@ -15,7 +16,7 @@ try {
   console.log("could not connect!");
   process.exit();
 }
-
+*/
 mongoose.connection.on('connected', () => {
   console.log('Mongoose connected!');
 });

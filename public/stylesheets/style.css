@@ -21,6 +21,7 @@ button, input, select, textarea {
 
 .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
   margin-left: 1em;
+  max-width: 100%;
 }
 
 .navbar-light .navbar-brand {
