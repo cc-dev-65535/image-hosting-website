@@ -119,9 +119,6 @@ a.navbar-brand {
 #imageDisplay {
   display: flex;
   flex-wrap: wrap;
-  /*
-  grid-template-columns: repeat(auto-fill, minmax(300px, auto))
-  */
 }
 
 .imgContainer {
@@ -191,4 +188,9 @@ a.navbar-brand {
 
 .row {
   --bs-gutter-x: 0;
+}
+
+#errorPage {
+  margin-top: 100px;
+  margin-left: 20px;
 }

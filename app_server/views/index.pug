@@ -7,6 +7,7 @@ block content
       h1 Image Upload
       form(id="fileInput" action="/upload" method="post" enctype="multipart/form-data")
         label(for="filebutton") Choose Image
+        span: small  (jpg, png, webp supported)
         input(type='file' name='image' id='filebutton' accept="image/*" required)
         div(id="fileList")
         button(id="uploadButton") Upload!

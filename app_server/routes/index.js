@@ -11,7 +11,11 @@ const storage = multer.diskStorage({
     const timestamp = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const tempArray = file.originalname.split(".");
     const fileType = tempArray[tempArray.length - 1];
-    cb(null, timestamp + "." + fileType);
+    if (/jpg|png|webp/.test(fileType)) {
+      cb(null, timestamp + "." + fileType);
+    } else {
+      cb(new Error("Invalid image file"));
+    }
   }
 })
 const upload = multer({ storage: storage })

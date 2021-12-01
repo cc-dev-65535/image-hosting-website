@@ -61,7 +61,7 @@ typings/
 .next
 
 # exclude upload folder files
-public/uploads/*
+/uploads/*
 
 # but leave readme inside
-!public/uploads/README.txt
+!/uploads/README.txt
