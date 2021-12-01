@@ -1,18 +1,16 @@
 const mongoose = require('mongoose');
 const readLine = require ('readline');
 
-const dbURI = 'mongodb://localhost/ImageSite';
+//const dbURI = 'mongodb://localhost/ImageSite';
+//mongoose.connect(dbURI, {useNewUrlParser: true});
 
+const dbURI = process.env.MONGODB_URI;
 try {
-  if (process.env.NODE_ENV === 'production') {
-    dbURI = process.env.MONGODB_URI;
-    mongoose.connect(
-        dbURI,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-    );
-  } else {
-    mongoose.connect(dbURI, {useNewUrlParser: true});
-  }
+  mongoose.connect(
+    dbURI,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => console.log("connected!")
+  );
 } catch (error) {
   console.log("could not connect!");
   process.exit();
