@@ -10,7 +10,6 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = 'https://fathomless-wave-52759.herokuapp.com';
 }
 const imageserver = 'https://imagehostingproject.s3.ca-central-1.amazonaws.com';
-
 const REGION = "ca-central-1";
 const s3Client = new S3Client({ region: REGION });
 
@@ -32,7 +31,6 @@ const homepage = async (req, res, next) => {
     return next(createError(response.status));
   }
   const imageData = await response.json();
-  imageData.reverse();
   res.render('index', { title: 'Image Hosting Site', images: imageData});
 };
 
@@ -72,31 +70,32 @@ const getImage = async (req, res, next) => {
   res.render('image', {thumbpath: thumburi, path: uri, comments: commentArray, imageid: imageID});
 };
 
-const createThumbImage = async (req, filePath, newFileName) => {
-  let image = await sharp(filePath);
-  let metadataTemp;
-  await image.metadata().then((metadata) => {metadataTemp = metadata});
-  await image.resize(Math.round(metadataTemp.width * 0.3), Math.round(metadataTemp.height * 0.3))
-             .toFile(req.file.destination + "/" + newFileName);
-};
-
-const createPlaceHolder = async (req, filePath, placeHolderFileName) => {
+const createThumbAndPlaceHolder = async (req, filePath, newFileName, placeHolderFileName) => {
   let image = await sharp(filePath);
   let placeHolder;
   let metadataTemp;
   await image.metadata().then((metadata) => {metadataTemp = metadata});
   await image.resize(1, 1).toBuffer().then(async (data) => {placeHolder = await sharp(data)});
-  await placeHolder.resize(Math.round(metadataTemp.width * 0.3), Math.round(metadataTemp.height * 0.3))
-                   .toFile(req.file.destination + "/" + placeHolderFileName);
+  if (metadataTemp.width > 1024 || metadataTemp.height > 700) {
+    await image.resize(Math.round(metadataTemp.width * 0.3), Math.round(metadataTemp.height * 0.3))
+               .toFile(req.file.destination + "/" + newFileName);
+    await placeHolder.resize(Math.round(metadataTemp.width * 0.3), Math.round(metadataTemp.height * 0.3))
+               .toFile(req.file.destination + "/" + placeHolderFileName);
+  } else {
+    await image.resize(Math.round(metadataTemp.width * 0.5), Math.round(metadataTemp.height * 0.5))
+               .toFile(req.file.destination + "/" + newFileName);
+    await placeHolder.resize(Math.round(metadataTemp.width * 0.5), Math.round(metadataTemp.height * 0.5))
+               .toFile(req.file.destination + "/" + placeHolderFileName);
+  }
 };
 
 const uploadImageToStorage = async (req, filePath, newFileName, placeHolderFileName) => {
   const slicedFilePath = filePath.substring(0, filePath.lastIndexOf('/'));
   const thumbFilePath = slicedFilePath + "/" + newFileName;
   const placeHolderFilePath = slicedFilePath + "/" + placeHolderFileName;
-  let data = fs.readFileSync(filePath);
-  let thumbData = fs.readFileSync(thumbFilePath);
-  let placeHolderData = fs.readFileSync(placeHolderFilePath);
+  const data = fs.readFileSync(filePath);
+  const thumbData = fs.readFileSync(thumbFilePath);
+  const placeHolderData = fs.readFileSync(placeHolderFilePath);
 
   const params = {
     Bucket: "imagehostingproject",
@@ -133,8 +132,7 @@ const upload = async (req, res, next) => {
   const placeHolderFileName = filenameArray[0] + "-placeholder." + filenameArray[1];
 
   try {
-    await createThumbImage(req, filePath, newFileName);
-    await createPlaceHolder(req, filePath, placeHolderFileName);
+    await createThumbAndPlaceHolder(req, filePath, newFileName, placeHolderFileName);
     await uploadImageToStorage(req, filePath, newFileName, placeHolderFileName);
   } catch(error) {
     //console.log(error);

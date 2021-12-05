@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const imgModel = mongoose.model('Image');
 
 const getAllImages = (req, res) => {
-  imgModel.find().exec((err, images) => {
+  imgModel.find().sort({ timestamp: 'desc' }).exec((err, images) => {
     if (err) {
       return res.status(400).json(err);
     }
