@@ -9,7 +9,7 @@ const apiOptions = {
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = 'https://fathomless-wave-52759.herokuapp.com';
 }
-const imageserver = 'https://imagehostingproject.s3.ca-central-1.amazonaws.com';
+const cdnServer = 'https://d3e9tz854kda7n.cloudfront.net';
 const REGION = "ca-central-1";
 const s3Client = new S3Client({ region: REGION });
 
@@ -89,7 +89,7 @@ const createThumbAndPlaceHolder = async (req, filePath, newFileName, placeHolder
   }
 };
 
-const uploadImageToStorage = async (req, filePath, newFileName, placeHolderFileName) => {
+const uploadImageToStorage = async (req, fileType, filePath, newFileName, placeHolderFileName) => {
   const slicedFilePath = filePath.substring(0, filePath.lastIndexOf('/'));
   const thumbFilePath = slicedFilePath + "/" + newFileName;
   const placeHolderFilePath = slicedFilePath + "/" + placeHolderFileName;
@@ -100,19 +100,22 @@ const uploadImageToStorage = async (req, filePath, newFileName, placeHolderFileN
   const params = {
     Bucket: "imagehostingproject",
     Key: req.file.filename,
-    Body: data
+    Body: data,
+    ContentType: fileType
   };
 
   const paramstwo = {
     Bucket: "imagehostingproject",
     Key: newFileName,
-    Body: thumbData
+    Body: thumbData,
+    ContentType: fileType
   };
 
   const paramsthree = {
     Bucket: "imagehostingproject",
     Key: placeHolderFileName,
-    Body: placeHolderData
+    Body: placeHolderData,
+    ContentType: fileType
   };
 
   await s3Client.send(new PutObjectCommand(params));
@@ -127,13 +130,14 @@ const upload = async (req, res, next) => {
 
   const regex = /\\/g;
   const filePath = req.file.path.replace(regex, "/");
+  const fileType = req.file.mimetype;
   const filenameArray = req.file.filename.split(".");
   const newFileName = filenameArray[0] + "-thumb." + filenameArray[1];
   const placeHolderFileName = filenameArray[0] + "-placeholder." + filenameArray[1];
 
   try {
     await createThumbAndPlaceHolder(req, filePath, newFileName, placeHolderFileName);
-    await uploadImageToStorage(req, filePath, newFileName, placeHolderFileName);
+    await uploadImageToStorage(req, fileType, filePath, newFileName, placeHolderFileName);
   } catch(error) {
     //console.log(error);
     return next(createError(500));
@@ -142,9 +146,9 @@ const upload = async (req, res, next) => {
   const path = '/api/images'
   const url = apiOptions.server + path;
   const body = {
-    uri: imageserver + '/' + req.file.filename,
-    thumburi: imageserver + '/' + newFileName,
-    placeholderuri: imageserver + '/' + placeHolderFileName
+    uri: cdnServer + '/' + req.file.filename,
+    thumburi: cdnServer + '/' + newFileName,
+    placeholderuri: cdnServer + '/' + placeHolderFileName
   };
   let response;
   try {
