@@ -1,4 +1,5 @@
 extends layout
+include _includes/HTMLfunctions
 block script
   script(src='/javascripts/mainscript.js' defer)
 block content
@@ -6,11 +7,22 @@ block content
     div(id="uploadContainer")
       h1 Image Upload
       form(id="fileInput" action="/upload" method="post" enctype="multipart/form-data")
-        label(for="filebutton") Choose Image
-        span: small  (jpg, png, webp supported)
-        input(type='file' name='image' id='filebutton' accept="image/*" required)
-        div(id="fileList")
+        ul
+          li
+            label(for="titleInputBox") Image Title:
+            input(id="titleInputBox" name="title" required)
+            span: small  (max 20 characters)
+          li
+            label(for="filebutton") Choose Image
+            span: small  (jpg, png, webp supported)
+            input(type='file' name='image' id='filebutton' accept="image/*" required)
+            div(id="fileList")
         button(id="uploadButton") Upload!
     div(id='imageDisplay')
       each image in images
-        div(class='imgContainer'): a(href=`/image/${image._id}`): img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
+        div(class='imgContainer')
+          label#title #{image.title}
+          a(href=`/image/${image._id}`)
+            img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
+          small#timestamp Posted on: 
+            +formatDate(image.timestamp)

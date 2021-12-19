@@ -30,6 +30,7 @@ const uploadImage = (req, res) => {
     { uri: req.body.uri,
       thumburi: req.body.thumburi,
       placeholderuri: req.body.placeholderuri,
+      title: req.body.title,
       comments: []
     }, (err, image) => {
       if (err) {

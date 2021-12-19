@@ -123,6 +123,8 @@ a.navbar-brand {
 
 .imgContainer {
   margin: 2em;
+  display: flex;
+  flex-direction: column;
 }
 
 .imgContainer img {
@@ -157,12 +159,10 @@ a.navbar-brand {
 #commentLabel {
   background-color: rgba(192, 128, 63, 0.3);
   padding: 0.5em;
-  /*margin-bottom: 0.1em;*/
 }
 
 #commentText {
   padding: 0.5em;
-  /*padding: 0.5em;*/
 }
 
 #commentInput {
@@ -180,6 +180,27 @@ a.navbar-brand {
   margin-bottom: 0.2em;
   display: block;
   resize:none;
+}
+
+#timestamp {
+  color: green;
+  font-style: italic;
+}
+
+#commentTimestamp {
+  margin-left: 1em;
+  color: red;
+  font-style: italic;
+}
+
+#titleInputBox {
+  margin-left: 0.3em;
+  margin-bottom: 0.4em;
+}
+
+#title {
+  color: green;
+  font-weight: bold;
 }
 
 .hidden {

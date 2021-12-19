@@ -1,4 +1,5 @@
 extends layout
+include _includes/HTMLfunctions
 block script
   script(src='/javascripts/imagescript.js' defer)
 block content
@@ -8,6 +9,8 @@ block content
     each comment in comments
       div(id="commentContainer" class="row")
         span(id="commentLabel") #{comment.author}
+          small(id="commentTimestamp")
+            +formatDate(comment.timestamp)
         p(id="commentText") #{comment.text}
   h1 Post Comment
   form(id="commentInput" action=`/comment/${imageid}` method="post")

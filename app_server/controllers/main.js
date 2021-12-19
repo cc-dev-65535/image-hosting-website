@@ -128,6 +128,11 @@ const upload = async (req, res, next) => {
     return next(createError(400));
   }
 
+  const lengthLimit = 20;
+  if ((req.body.title == "") || (req.body.title.length > lengthLimit)) {
+    return next(createError(400));
+  }
+
   const regex = /\\/g;
   const filePath = req.file.path.replace(regex, "/");
   const fileType = req.file.mimetype;
@@ -148,7 +153,8 @@ const upload = async (req, res, next) => {
   const body = {
     uri: cdnServer + '/' + req.file.filename,
     thumburi: cdnServer + '/' + newFileName,
-    placeholderuri: cdnServer + '/' + placeHolderFileName
+    placeholderuri: cdnServer + '/' + placeHolderFileName,
+    title: req.body.title.toUpperCase()
   };
   let response;
   try {
