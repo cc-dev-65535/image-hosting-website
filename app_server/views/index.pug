@@ -20,9 +20,10 @@ block content
         button(id="uploadButton") Upload!
     div(id='imageDisplay')
       each image in images
-        div(class='imgContainer')
-          label#title #{image.title}
-          a(href=`/image/${image._id}`)
+        div(class='card')
+          a(class="card-img-top" href=`/image/${image._id}`)
             img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
-          small#timestamp Posted on: 
-            +formatDate(image.timestamp)
+          div(class="card-body")
+            p(class="card-title") #{image.title}
+            small(class="card-text" id="timestamp") Posted on: 
+              +formatDate(image.timestamp)
