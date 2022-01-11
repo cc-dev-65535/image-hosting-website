@@ -26,5 +26,5 @@ block content
             img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
           div(class="card-body")
             p(class="card-title") #{image.title}
-            small(class="card-text" id="timestamp") Posted on:
+            small(class="card-text" id="timestamp") Posted on: 
               +formatDate(image.timestamp)
