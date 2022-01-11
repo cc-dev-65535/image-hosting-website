@@ -203,7 +203,21 @@ a.navbar-brand {
 
 #titleInputBox {
   margin-left: 0.3em;
-  margin-bottom: 0.4em;
+  margin-bottom: 0.5em;
+
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 5px;
+  font: 1em sans-serif;
+}
+
+.counterText {
+  margin-left: 85px;
+  color: red;
+}
+
+#uploadContainer h1 {
+  font-family: cursive;
 }
 
 .card-title {

@@ -1,3 +1,4 @@
+/* !!! CHANGE FILE UPLOAD BUTTON LAYOUT */
 const fileButton = document.querySelector('#filebutton');
 const fileList = document.querySelector('#fileList');
 
@@ -21,7 +22,8 @@ function updateFile() {
   }
 }
 
-var displayImages = document.querySelectorAll(".images");
+/* !!! ONLY SHOW IMAGE WHEN FULLY LOADED */
+let displayImages = document.querySelectorAll(".images");
 
 displayImages.forEach(function(image) {
     let tempImage = document.createElement('img');
@@ -31,3 +33,21 @@ displayImages.forEach(function(image) {
     tempImage.src = image.dataset.src;
   }
 );
+
+/* !!! CALCULATE REMAINING CHARACTERS AND UPDATE LABEL */
+const formInput = document.querySelector('#titleInputBox');
+const textLabel = document.querySelector('.counterText');
+const text = document.querySelector('.counterTextInner');
+const maxChar = 20;
+
+formInput.addEventListener('input', updateText);
+
+function updateText() {
+  if (formInput.value.length >= 1) {
+    textLabel.setAttribute('class', 'counterText');
+    charLeft = maxChar - formInput.value.length;
+    text.textContent = ((charLeft >= 1) ? charLeft : 0) + " characters remaining";
+  } else {
+    textLabel.setAttribute('class', 'counterText hidden');
+  }
+}

@@ -5,13 +5,14 @@ block script
 block content
   div(id="root" class="container")
     div(id="uploadContainer")
-      h1 Image Upload
+      h1 IMAGE UPLOAD
       form(id="fileInput" action="/upload" method="post" enctype="multipart/form-data")
         ul
           li
             label(for="titleInputBox") Image Title:
             input(id="titleInputBox" name="title" required)
             span: small  (max 20 characters)
+            p(class="counterText hidden"): small(class="counterTextInner")
           li
             label(for="filebutton") Choose Image
             span: small  (jpg, png, webp supported)
@@ -25,5 +26,5 @@ block content
             img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
           div(class="card-body")
             p(class="card-title") #{image.title}
-            small(class="card-text" id="timestamp") Posted on: 
+            small(class="card-text" id="timestamp") Posted on:
               +formatDate(image.timestamp)
