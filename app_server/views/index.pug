@@ -23,10 +23,11 @@ block content
     div(class='rightLayout')
       div(class='imageDisplay')
         each image in images
-          div(class='card')
-            a(class="card-img-top" href=`/image/${image._id}`)
-              img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
-            div(class="card-body")
-              p(class="card-title") #{image.title}
-              small(class="card-text timestamp")
-                +formatDate(image.timestamp)
+          div
+            div(class='card')
+              a(class="card-img-top" href=`/image/${image._id}`)
+                img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
+              div(class="card-body")
+                p(class="card-title") #{image.title}
+                small(class="card-text timestamp")
+                  +formatDate(image.timestamp)
