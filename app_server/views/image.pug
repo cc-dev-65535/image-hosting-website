@@ -3,22 +3,26 @@ include _includes/HTMLfunctions
 block script
   script(src='/javascripts/imagescript.js' defer)
 block content
-  img(id="singleImage" src=`${thumbpath}` data-src=`${path}`)
-  h1 Comments
-  div(id='commentDisplay')
-    each comment in comments
-      div(id="commentContainer" class="row")
-        span(id="commentLabel") #{comment.author}
-          small(id="commentTimestamp")
-            +formatDate(comment.timestamp)
-        p(id="commentText") #{comment.text}
-  h1 Post Comment
-  form(id="commentInput" action=`/comment/${imageid}` method="post")
-    ul
-      li
-        label(for="authorInput") Name:
-        input(id="authorInput" name="author" required)
-      li
-        label(for="inputBox") Comment:
-        textarea(id="inputBox" name="text" required)
-      button(id='sendButton') Send
+  div(class="imageLayoutContainer container-fluid")
+    div
+      img(class="singleImage" src=`${thumbpath}` data-src=`${path}`)
+    div(class='commentDisplay')
+      h1 Comments
+      each comment in comments
+        div(class="commentContainer" class="row")
+          span(id="commentLabel") #{comment.author}
+            small(class="commentTimestamp")
+              +formatDate(comment.timestamp)
+          p(id="commentText") #{comment.text}
+    div(class="commentForm")
+      h1 Post Comment
+      form(id="commentInput" action=`/comment/${imageid}` method="post")
+        ul
+          li
+            label(for="authorInput") Name:
+            input(id="authorInput" name="author" required)
+          li
+            label(id="inputBoxLabel" for="inputBox") Comment:
+            textarea(id="inputBox" name="text" required)
+          li
+            button(id='sendButton') Send

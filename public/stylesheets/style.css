@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
-@import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lobster|Cabin:400,700');
 
 body {
-  /*padding: 50px;*/
-  font: 14px 'Noto Sans',"Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Roboto Slab', sans-serif;
+}
+
+.hidden {
+  display: none !important;
 }
 
 button, input, select, textarea {
@@ -14,31 +17,9 @@ button, input, select, textarea {
   margin: 0;
 }
 
-.navbar {
-  background-color: rgb(192, 128, 63);
-  border-color: #911821;
-}
-
-.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-  margin-left: 1em;
-  max-width: fit-content;
-}
-
-.navbar-light .navbar-brand {
-  color: #fff;
-}
-
-.navbar-light .navbar-nav .nav-link,
-.navbar-light .navbar-nav .nav-link:focus,
-.navbar-light .navbar-nav .nav-link:hover {
-  color: white;
-}
-
 h1 {
-  font-size: 2em;
+  font-size: 25px;
   font-weight: bold;
-  margin-left: 0.4em;
-  margin-bottom: 0.5em;
 }
 
 button {
@@ -50,79 +31,106 @@ button {
   color: #fff;
 }
 
-button:hover {
-  background-color: #333;
-}
-
 ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-label {
-  display: inline-block;
-  text-align: left;
+button:hover {
+  background-color: #333;
 }
 
-label[for="filebutton"] {
+.navbar {
+  background-color: rgb(192, 128, 63);
+  border-color: #911821;
+}
+
+.navbar-brand {
+  font-size: 25px !important;
+  font-family: 'Lobster', cursive;
+  color: #fff !important;
+  margin-left: 20px;
+}
+
+.navbar-brand:hover {
+  color: black !important;
+}
+
+.layoutContainer {
+  display: flex;
+}
+
+.uploadContainer {
+  margin-top: 80px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+}
+
+#titleInputBox {
+  margin-left: 0.3em;
+  margin-bottom: 0.5em;
+
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 5px;
+  width: 160px;
+}
+
+.fileInput ul li:first-child {
+  margin-bottom: 5px;
+}
+
+.fileInput label {
+  display: inline-block;
+}
+
+.fileInput label[for="filebutton"] {
   border: 3px solid #ccc;
   background-color: rgb(192, 128, 63);
   border-radius: 0.5em;
   padding: 1em;
   font-weight: bold;
   color: #fff;
-  margin-bottom: 0.5em;
 }
 
-label[for="filebutton"]:hover {
+.fileInput label[for="filebutton"]:hover {
   background-color: #333;
   cursor: pointer;
 }
 
-input[type="file"] {
+.fileInput input[type="file"] {
   height: 0;
   padding: 0;
   opacity: 0;
-}
-
-a.navbar-brand {
-  font-size: 25px;
-  font-family: 'Lobster', cursive;
 }
 
 #fileList {
   font-size: 12px;
   font-weight: bold;
   display: flex;
+  margin-bottom: 10px;
 }
 
 #fileList p {
+  margin-top: 20px;
   color: red;
-  padding-top: 1.5em;
 }
 
-
-#uploadButton {
-  margin-top: 0.5em;
+.counterText {
+  color: red;
 }
 
-#uploadContainer {
-  margin-top: 80px;
-  margin-left: 0.8em;
-}
-
-#fileInput {
-  margin-left: 10px;
-}
-
-#imageDisplay {
+.imageDisplay {
+  margin-top: 70px;
   display: flex;
   flex-wrap: wrap;
 }
 
 .card {
-  margin: 2em;
+  margin: 10px;
 }
 
 .card-img-top img {
@@ -132,59 +140,12 @@ a.navbar-brand {
   max-width: 100%;
 }
 
-#uploadButton {
-  display: block;
+.card-title {
+  color: green;
+  font-weight: bold;
 }
 
-#singleImage {
-  margin: 1em;
-  margin-top: 5em;
-}
-
-#singleImage:hover {
-  cursor: pointer;
-}
-
-#commentDisplay {
-  margin: 1em;
-  overflow-wrap: break-word;
-  width: 75%;
-}
-
-#commentContainer {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  background-color: rgba(192, 128, 63, 0.1);
-}
-
-#commentLabel {
-  background-color: rgba(192, 128, 63, 0.3);
-  padding: 0.5em;
-}
-
-#commentText {
-  padding: 0.5em;
-  white-space: pre-wrap;
-}
-
-#commentInput {
-  margin: 1em;
-}
-
-#authorInput {
-  margin-left: 0.3em;
-  margin-bottom: 0.4em;
-}
-
-#inputBox {
-  height: 200px;
-  width: 500px;
-  margin-bottom: 0.2em;
-  display: block;
-  resize:none;
-}
-
-#timestamp {
+.timestamp {
   color: green;
   font-style: italic;
 
@@ -195,42 +156,87 @@ a.navbar-brand {
   margin-right: 2px;
 }
 
-#commentTimestamp {
+.imageLayoutContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.singleImage {
+  margin-top: 70px;
+}
+
+.singleImage:hover {
+  cursor: pointer;
+}
+
+.commentDisplay {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow-wrap: break-word;
+  width: 75%;
+}
+
+.row {
+  --bs-gutter-x: 0 !important;
+}
+
+.commentContainer {
+  background-color: rgba(192, 128, 63, 0.1);
+}
+
+#commentLabel {
+  background-color: rgba(192, 128, 63, 0.3);
+  padding: 5px;
+}
+
+#commentText {
+  padding: 5px;
+  white-space: pre-wrap;
+}
+
+.commentTimestamp {
   margin-left: 1em;
   color: red;
   font-style: italic;
 }
 
-#titleInputBox {
+#authorInput {
   margin-left: 0.3em;
   margin-bottom: 0.5em;
 
   border: 1px solid #000;
   border-radius: 4px;
   padding: 5px;
-  font: 1em sans-serif;
+  width: 200px;
 }
 
-.counterText {
-  margin-left: 85px;
-  color: red;
+#inputBoxLabel {
+  margin-bottom: 5px;
 }
 
-#uploadContainer h1 {
-  font-family: cursive;
+#inputBox {
+  margin-bottom: 0.5em;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 5px;
+  height: 200px;
+  width: 500px;
+  display: block;
+  resize: none;
 }
 
-.card-title {
-  color: green;
-  font-weight: bold;
-}
+@media screen and (max-width: 800px) {
+  .layoutContainer {
+    flex-direction: column;
+  }
 
-.hidden {
-  display: none;
-}
+  .imageDisplay {
+    margin-top: 5px;
+  }
 
-.row {
-  --bs-gutter-x: 0;
+  body {
+    font-size: 11px;
+  }
 }
 
 #errorPage {

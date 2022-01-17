@@ -1,4 +1,4 @@
-/* !!! CHANGE FILE UPLOAD BUTTON LAYOUT */
+/* CHANGE FILE UPLOAD BUTTON LAYOUT */
 const fileButton = document.querySelector('#filebutton');
 const fileList = document.querySelector('#fileList');
 
@@ -12,6 +12,7 @@ function updateFile() {
   }
 
   if(!(curFiles.length === 0))  {
+    fileList.setAttribute("class", "");
     const fileImage = document.createElement('img');
     fileImage.src = "/images/icons8-image-file-64.png";
     fileList.appendChild(fileImage);
@@ -19,10 +20,12 @@ function updateFile() {
     const fileText = document.createElement('p');
     fileText.textContent = curFiles[0].name;
     fileList.appendChild(fileText);
+  } else {
+    fileList.setAttribute("class", "hidden");
   }
 }
 
-/* !!! ONLY SHOW IMAGE WHEN FULLY LOADED */
+/* ONLY SHOW IMAGE WHEN FULLY LOADED */
 let displayImages = document.querySelectorAll(".images");
 
 displayImages.forEach(function(image) {
@@ -34,7 +37,7 @@ displayImages.forEach(function(image) {
   }
 );
 
-/* !!! CALCULATE REMAINING CHARACTERS AND UPDATE LABEL */
+/* CALCULATE REMAINING CHARACTERS AND UPDATE LABEL */
 const formInput = document.querySelector('#titleInputBox');
 const textLabel = document.querySelector('.counterText');
 const text = document.querySelector('.counterTextInner');

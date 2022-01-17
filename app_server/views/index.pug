@@ -3,10 +3,10 @@ include _includes/HTMLfunctions
 block script
   script(src='/javascripts/mainscript.js' defer)
 block content
-  div(id="root" class="container")
-    div(id="uploadContainer")
+  div(class="layoutContainer container-fluid")
+    div(class="uploadContainer")
       h1 IMAGE UPLOAD
-      form(id="fileInput" action="/upload" method="post" enctype="multipart/form-data")
+      form(class="fileInput" action="/upload" method="post" enctype="multipart/form-data")
         ul
           li
             label(for="titleInputBox") Image Title:
@@ -17,14 +17,16 @@ block content
             label(for="filebutton") Choose Image
             span: small  (jpg, png, webp supported)
             input(type='file' name='image' id='filebutton' accept="image/*" required)
-            div(id="fileList")
-        button(id="uploadButton") Upload!
-    div(id='imageDisplay')
-      each image in images
-        div(class='card')
-          a(class="card-img-top" href=`/image/${image._id}`)
-            img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
-          div(class="card-body")
-            p(class="card-title") #{image.title}
-            small(class="card-text" id="timestamp") Posted on: 
-              +formatDate(image.timestamp)
+            div(id="fileList" class="hidden")
+          li
+            button Upload
+    div(class='rightLayout')
+      div(class='imageDisplay')
+        each image in images
+          div(class='card')
+            a(class="card-img-top" href=`/image/${image._id}`)
+              img(class="images" src=`${image.placeholderuri}` data-src=`${image.thumburi}`)
+            div(class="card-body")
+              p(class="card-title") #{image.title}
+              small(class="card-text timestamp")
+                +formatDate(image.timestamp)
