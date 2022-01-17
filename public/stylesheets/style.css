@@ -234,6 +234,10 @@ button:hover {
     margin-top: 5px;
   }
 
+  #inputBox {
+    width: 100%;
+  }
+
   body {
     font-size: 11px;
   }
