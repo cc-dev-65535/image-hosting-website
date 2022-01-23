@@ -120,12 +120,8 @@ button:hover {
 
 .imageDisplay {
   margin-top: 70px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.imageItem {
-  flex: 0 1 300px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .card {
@@ -249,8 +245,8 @@ button:hover {
     font-size: 11px;
   }
 
-  .imageItem {
-    flex: 0 1 auto;
+  .imageDisplay {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 
   .commentForm {
