@@ -243,16 +243,20 @@ button:hover {
     margin-top: 5px;
   }
 
-  .imageItem {
-    flex: 0 1 auto;
-  }
-
   #inputBox {
     width: 100%;
   }
 
+}
+
+@media screen and (max-width: 767.98px) {
+
   body {
     font-size: 11px;
+  }
+
+  .imageItem {
+    flex: 0 1 auto;
   }
 
 }
