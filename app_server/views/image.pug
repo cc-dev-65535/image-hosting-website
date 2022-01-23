@@ -10,8 +10,8 @@ block content
       div(class='commentDisplay')
         h1 Comments
         each comment in comments
-          div(class="commentContainer" class="row")
-            span(id="commentLabel") #{comment.author}
+          div(class="commentContainer")
+            p(id="commentLabel") #{comment.author}
               small(class="commentTimestamp")
                 +formatDate(comment.timestamp)
             p(id="commentText") #{comment.text}
