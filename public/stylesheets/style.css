@@ -179,6 +179,10 @@ button:hover {
   width: 75%;
 }
 
+.commentForm {
+  width: 40%;
+}
+
 .commentContainer {
   background-color: rgba(192, 128, 63, 0.1);
   margin-top: 5px;
@@ -222,7 +226,7 @@ button:hover {
   border-radius: 4px;
   padding: 5px;
   height: 200px;
-  width: 500px;
+  width: 100%;
   display: block;
   resize: none;
 }
@@ -237,10 +241,6 @@ button:hover {
     margin-top: 5px;
   }
 
-  #inputBox {
-    width: 100%;
-  }
-
 }
 
 @media screen and (max-width: 575.98px) {
@@ -251,6 +251,10 @@ button:hover {
 
   .imageItem {
     flex: 0 1 auto;
+  }
+
+  .commentForm {
+    width: 100%;
   }
 
 }
