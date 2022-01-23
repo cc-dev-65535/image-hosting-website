@@ -5,7 +5,7 @@ block script
 block content
   div(class="container-fluid")
     div(class="layoutContainer row")
-      div(class="uploadContainer col-12 col-xl-3")
+      div(class="uploadContainer col-12 col-xxl-3")
         h1 IMAGE UPLOAD
         form(class="fileInput" action="/upload" method="post" enctype="multipart/form-data")
           ul
@@ -21,7 +21,7 @@ block content
               div(id="fileList" class="hidden")
             li
               button Upload
-      div(class='rightLayout col-12 col-xl-8')
+      div(class='rightLayout col-12 col-xxl-8')
         div(class='imageDisplay')
           each image in images
             div(class="imageItem")

@@ -233,7 +233,7 @@ button:hover {
   resize: none;
 }
 
-@media screen and (max-width: 1199.98px) {
+@media screen and (max-width: 1399.98px) {
 
   .fileInput li {
     margin-top: 5px;
@@ -249,7 +249,7 @@ button:hover {
 
 }
 
-@media screen and (max-width: 767.98px) {
+@media screen and (max-width: 575.98px) {
 
   body {
     font-size: 11px;
