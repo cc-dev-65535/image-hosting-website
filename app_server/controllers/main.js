@@ -67,7 +67,7 @@ const getImage = async (req, res, next) => {
   const commentData = await responsetwo.json();
   const commentArray = commentData[0].comments;
 
-  res.render('image', {thumbpath: thumburi, path: uri, comments: commentArray, imageid: imageID});
+  res.render('image', { title: 'Image Hosting Site', thumbpath: thumburi, path: uri, comments: commentArray, imageid: imageID});
 };
 
 const createThumbAndPlaceHolder = async (req, filePath, newFileName, placeHolderFileName) => {
