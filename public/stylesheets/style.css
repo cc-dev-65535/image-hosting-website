@@ -181,6 +181,7 @@ button:hover {
 
 .commentContainer {
   background-color: rgba(192, 128, 63, 0.1);
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
 }
