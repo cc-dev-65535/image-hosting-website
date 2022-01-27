@@ -27,7 +27,8 @@ const getOneImage = (req, res) => {
 
 const uploadImage = (req, res) => {
   imgModel.create(
-    { uri: req.body.uri,
+    {
+      uri: req.body.uri,
       thumburi: req.body.thumburi,
       placeholderuri: req.body.placeholderuri,
       title: req.body.title,
@@ -50,25 +51,25 @@ const deleteImage = (req, res) => {
   });
 };
 
-const updateImage = (req, res) => {
-  imgModel.find({_id: req.params.imageid}).exec((err, image) => {
-    if (err) {
-      return res.status(400).json(err);
-    }
-    if (!image) {
-      return res.status(404).json({message: "image missing"});
-    }
-    image[0].uri = req.body.uri;
-    image[0].thumburi = req.body.thumburi;
-    image[0].placeholderuri = req.body.placeholderuri;
-
-    image[0].save((err, image) => {
-      if (err) {
-        res.status(400).json(err);
+const updateImage = async (req, res) => {
+  try {
+    const session = await mongoose.connection.startSession();
+    await session.withTransaction(async () => {
+      const imgDoc = await imgModel.findOne({_id: req.params.imageid}).session(session);
+      if (imgDoc === null) {
+        return res.status(404).json({message: "image missing"});
       }
+      imgDoc.uri = req.body.uri;
+      imgDoc.thumburi = req.body.thumburi;
+      imgDoc.placeholderuri = req.body.placeholderuri;
+      await imgDoc.save();
       res.status(201).json(null);
     });
-  });
+    session.endSession();
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
 };
 
 module.exports = {

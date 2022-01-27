@@ -186,7 +186,7 @@ const postComment = async (req, res, next) => {
   };
   try {
     response = await fetch(url, {
-      method: 'post',
+       method: 'post',
 	     body: JSON.stringify(body),
        headers: {'Content-Type': 'application/json'}
     });
