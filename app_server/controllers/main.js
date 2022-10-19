@@ -7,7 +7,7 @@ const apiOptions = {
   server: 'http://localhost:3200'
 };
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = 'Imagewebsite-env.eba-kpmz2tqh.us-west-2.elasticbeanstalk.com';
+  apiOptions.server = 'https://fathomless-wave-52759.herokuapp.com';
 }
 const cdnServer = 'https://d3e9tz854kda7n.cloudfront.net';
 const REGION = "ca-central-1";
