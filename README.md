@@ -9,3 +9,5 @@ Image hosting website implemented using Node/Express
 * REST API on the back-end for access to data
 * Uses AWS S3/CloudFront for image storage and distribution
 * Hosted using AWS Elastic Beanstalk
+
+![Image](https://raw.githubusercontent.com/grepsedawkcat/nodejs_website/main/Untitled.png)
