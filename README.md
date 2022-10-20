@@ -8,6 +8,6 @@ Image hosting website implemented using Node/Express
 * Uses MongoDB/Mongoose for storage
 * REST API on the back-end for access to data
 * Uses AWS S3/CloudFront for image storage and distribution
-* Hosted on Heroku
+* Hosted using Heroku
 
 ![Image](Untitled.png)
