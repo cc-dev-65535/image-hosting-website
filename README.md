@@ -1,5 +1,5 @@
 # Node.js Website
-Image hosting website implemented using Node/Express  
+Image hosting website implemented using Node/Express.  
 
 [Website Link](https://fathomless-wave-52759.herokuapp.com)  
 [Git Repo](https://github.com/grepsedawkcat/nodejs_website)  
