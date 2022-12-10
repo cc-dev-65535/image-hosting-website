@@ -2,7 +2,7 @@
 Image hosting website implemented using Node/Express.  
 
 [Website Link](https://fathomless-wave-52759.herokuapp.com)  
-[Git Repo](https://github.com/collinc1212/nodejs_website)  
+[Git Repo](https://github.com/grepsedawkcat/nodejs_website)  
 
 ## Details
 * Uses MongoDB/Mongoose for storage
