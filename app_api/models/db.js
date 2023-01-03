@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const readLine = require ('readline');
 
-let dbURI = "mongodb+srv://mongouser:imgmongouser@cluster0.zeken.mongodb.net/ImageSite?retryWrites=true&w=majority";
+let dbURI = "mongodb://localhost/imagesite";
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGODB_URI;
 }
